@@ -1,19 +1,55 @@
-" URL: http://vim.wikia.com/wiki/Example_vimrc
-" Authors: http://vim.wikia.com/wiki/Vim_on_Freenode
-" Description: A minimal, but feature rich, example .vimrc. If you are a
-"              newbie, basing your first .vimrc on this file is a good choice.
-"              If you're a more advanced user, building your own .vimrc based
-"              on this file is still a good idea.
+" URL: https://github.com/xaxis-ii/vimrc
+" Authors: Simon Koch (https://github.com/xaxis-ii/)
+" Description: Vim, how I like it. Adapted from the following example config
+" 	       file provided on the Vim wiki (thanks to original authors!):
+"
+"	> URL: http://vim.wikia.com/wiki/Example_vimrc
+"	> Authors: http://vim.wikia.com/wiki/Vim_on_Freenode
+"	> Description: A minimal, but feature rich, example .vimrc. If you 
+"	>	       are a newbie, basing your first .vimrc on this file is 
+"	>	       a good choice. If you're a more advanced user, building 
+"	>	       your own .vimrc based on this file is still a good idea.
+
+
+"------------------------------------------------------------
+" Pre-Vundle feature hooks
+"
+" Features that need to be set before we load Vundle
+
+" Set 'nocompatible' to ward off unexpected things that your distro might
+" have made, as well as sanely reset options when re-sourcing .vimrc
+set nocompatible
+
+" Turn off filetype handling until we've dealt with loading plugins.
+filetype off
+
+
+"------------------------------------------------------------
+" Vundle Config and Plugins
+"
+" Plugins and Vundle are both configured here
+
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+" alternatively, pass a path where Vundle should install plugins
+"call vundle#begin('~/some/path/here')
+
+" let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim'
+
+" Plugin 'CurtineIncSw' -> header/source intelligent switching
+Plugin 'ericcurtin/CurtineIncSw.vim'
+
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
+
  
 "------------------------------------------------------------
 " Features {{{1
 "
 " These options and commands enable some very useful features in Vim, that
 " no user should have to live without.
- 
-" Set 'nocompatible' to ward off unexpected things that your distro might
-" have made, as well as sanely reset options when re-sourcing .vimrc
-set nocompatible
  
 " Attempt to determine the type of a file based on its name and possibly its
 " contents. Use this to allow intelligent auto-indenting for each filetype,
@@ -141,12 +177,22 @@ set expandtab
 " four characters wide.
 "set shiftwidth=4
 "set tabstop=4
+
+"------------------------------------------------------------
+" Fold options {{{1
+"
+" Folding settings according to preference
  
+" Turn on folding based on syntax
+set foldmethod=syntax
+set foldlevel=0
+"set foldclose=all
+let c_no_comment_fold = 1
  
 "------------------------------------------------------------
 " Mappings {{{1
 "
-" Useful mappings
+" == Useful mappings
  
 " Map Y to act like D and C, i.e. to yank until EOL, rather than act as yy,
 " which is the default
@@ -155,13 +201,19 @@ map Y y$
 " Map <C-L> (redraw screen) to also turn off search highlighting until the
 " next search
 nnoremap <C-L> :nohl<CR><C-L>
- 
-"------------------------------------------------------------
+
+" == CurtineIncSw mapping (to <F5>)
+
+map <F5> :call CurtineIncSw()<CR> 
+
+" == <ESC> replacement(s)
 
 " Can be typed even faster than jj, and if you are already in
 "    normal mode, you (usually) don't accidentally move:
 :imap jk <Esc>
 :imap kj <Esc>
+
+" == Turn off cheats (i.e. no <up> <down> <left> <right> for you!)
 
 nnoremap <up>    <nop>
 nnoremap <down>  <nop>
@@ -176,8 +228,5 @@ vnoremap <down>  <nop>
 vnoremap <left>  <nop>
 vnoremap <right> <nop>
 
-" Turn on folding based on syntax
-set foldmethod=syntax
-set foldlevel=0
-"set foldclose=all
-let c_no_comment_fold = 1
+
+"------------------------------------------------------------
