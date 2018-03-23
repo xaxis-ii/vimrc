@@ -175,3 +175,9 @@ vnoremap <up>    <nop>
 vnoremap <down>  <nop>
 vnoremap <left>  <nop>
 vnoremap <right> <nop>
+
+" Turn on folding based on syntax
+set foldmethod=syntax
+set foldlevel=0
+"set foldclose=all
+let c_no_comment_fold = 1
