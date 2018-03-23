@@ -38,6 +38,9 @@ call vundle#begin()
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
 
+" Plugin 'fugitive' -> Git linkages cause hell yes
+Plugin 'tpope/vim-fugitive'
+
 " Plugin 'CurtineIncSw' -> header/source intelligent switching
 Plugin 'ericcurtin/CurtineIncSw.vim'
 
@@ -149,7 +152,7 @@ set t_vb=
 set mouse=a
  
 " Set the command window height to 2 lines, to avoid many cases of having to
-" "press <Enter> to continue"
+" press <Enter> to continue
 set cmdheight=2
  
 " Display line numbers on the left
@@ -188,7 +191,8 @@ set foldmethod=syntax
 set foldlevel=0
 "set foldclose=all
 let c_no_comment_fold = 1
- 
+
+
 "------------------------------------------------------------
 " Mappings {{{1
 "
@@ -214,19 +218,21 @@ map <F5> :call CurtineIncSw()<CR>
 :imap kj <Esc>
 
 " == Turn off cheats (i.e. no <up> <down> <left> <right> for you!)
+" Better idea - why not use them for subwindow navigation; that way they're
+"               more useful to us, and we're not tempted to cheat.
 
-nnoremap <up>    <nop>
-nnoremap <down>  <nop>
-nnoremap <left>  <nop>
-nnoremap <right> <nop>
-inoremap <up>    <nop>
-inoremap <down>  <nop>
-inoremap <left>  <nop>
-inoremap <right> <nop>
-vnoremap <up>    <nop>
-vnoremap <down>  <nop>
-vnoremap <left>  <nop>
-vnoremap <right> <nop>
+nnoremap <up>    <C-w>k
+nnoremap <down>  <C-w>j
+nnoremap <left>  <C-w>h
+nnoremap <right> <C-w>l
+inoremap <up>    <C-w>k
+inoremap <down>  <C-w>j
+inoremap <left>  <C-w>h
+inoremap <right> <C-w>l
+vnoremap <up>    <C-w>k
+vnoremap <down>  <C-w>j
+vnoremap <left>  <C-w>h
+vnoremap <right> <C-w>l
 
 
 "------------------------------------------------------------

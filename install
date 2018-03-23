@@ -1,0 +1,64 @@
+#!/usr/bin/env bash
+
+echo 'Vim dotfile installation script'
+echo '  (c) Simon Koch 2018'
+echo '  Licensed under GNU GPL v3 (2009-06-29)'
+echo
+
+# Error handling helper (I'm a lazy fuck)
+function perror {
+    echo "ERROR: ${@}"
+    exit
+}
+
+# Associative array declaration - Bash 4 required
+declare -A VIMRC \
+    || perror 'Bash 4+ required for `declare -A`. Please update or modify ' \
+              '.vim/install to bypass requirement.'
+
+# Dotfile locations
+VIMRC=( 
+    ["vimrc"]="${HOME}/.vimrc"
+)
+
+# Helper function - evaluate then print
+function evale {
+    (eval "${@}" && echo "    \$ ${@}") || perror "$1 failed! Exiting..." 
+}
+
+# Where are we running from...?
+# Assume files to be linked to are in same dir as install script.
+HERE="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+echo "= Found dotfiles and git repo here: ${HERE}"
+echo
+
+echo '= Installing links for dotfiles...'
+for dotfile in "${!VIMRC[@]}"; do
+    evale ln -s "${HERE}/${dotfile}" "${VIMRC[${dotfile}]}" 
+done
+echo '= Finished installing dotfile links'
+echo
+
+echo '= Initialising Vundle'
+(git --version > /dev/null) \
+    || perror 'Git required - (how did you get this repo to begin with?'
+evale cd "${HERE}/bundle/Vundle.vim"
+evale git submodule init
+evale git submodule sync
+
+# Sanity check => do we have anything here
+if [[ $(ls | wc -w) = "0" ]]; then
+    perror 'Vundle files seem to be missing... Check .vim/bundle/Vundle.vim'
+fi
+
+echo '= Vundle initialized.'
+echo
+
+echo '= Installing vim plugins'
+evale vim +PluginInstall +qall
+echo '= Vim plugins installed'
+echo
+
+echo '[SUCCESS]: Finished vim setup!'
+
