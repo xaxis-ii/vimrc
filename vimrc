@@ -44,6 +44,15 @@ Plugin 'tpope/vim-fugitive'
 " Plugin 'CurtineIncSw' -> header/source intelligent switching
 Plugin 'ericcurtin/CurtineIncSw.vim'
 
+" Plugin 'NERDTree' -> filesystem tree view
+Plugin 'scrooloose/nerdtree'
+
+" Plugin 'taglist' -> C++/C/etc. tag lists
+Plugin 'taglist.vim'
+
+" Plugin 'Supertab' -> Tab completion
+Plugin 'ervandew/supertab'
+
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 
@@ -163,7 +172,29 @@ set notimeout ttimeout ttimeoutlen=200
  
 " Use <F11> to toggle between 'paste' and 'nopaste'
 set pastetoggle=<F11>
- 
+
+
+"------------------------------------------------------------
+" Statusline {{{1
+"
+" Statusline components and format
+
+set statusline =
+" Buffer number
+set statusline +=[%n]
+" File description
+set statusline +=\ %f\ %h%m%r%w
+" Name of the current function (needs taglist.vim)
+set statusline +=\ \{%{Tlist_Get_Tagname_By_Line()}\}
+" Name of the current branch (needs fugitive.vim)
+set statusline +=\ %{fugitive#statusline()}
+" Date of the last time the file was saved
+set statusline +=\ %{strftime(\"[%d/%m/%y\ %T]\",getftime(expand(\"%:p\")))} 
+" Total number of lines in the file
+set statusline +=%=%-10L
+" Line, column and percentage
+set statusline +=%=%-14.(%l,%c%V%)\ %P
+
  
 "------------------------------------------------------------
 " Indentation options {{{1
@@ -192,6 +223,17 @@ set foldlevel=0
 "set foldclose=all
 let c_no_comment_fold = 1
 
+
+"------------------------------------------------------------
+" Automated Processes {{{1
+"
+" == Save folds on exit
+
+augroup AutoSaveFolds
+  autocmd!
+  autocmd BufWinLeave * mkview
+  autocmd BufWinEnter * silent loadview
+augroup END
 
 "------------------------------------------------------------
 " Mappings {{{1
@@ -234,5 +276,10 @@ vnoremap <down>  <C-w>j
 vnoremap <left>  <C-w>h
 vnoremap <right> <C-w>l
 
+" Toggle TagList with <F8> in normal mode
+nnoremap <silent> <F8> :TlistToggle<CR>
+
+" Toggle NERDTree with <F4> in normal mode
+nnoremap <silent> <F4> :NERDTreeToggle<CR>
 
 "------------------------------------------------------------
