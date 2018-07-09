@@ -46,6 +46,7 @@ echo '= Initialising Vundle'
 evale cd "${HERE}/bundle/Vundle.vim"
 evale git submodule init
 evale git submodule sync
+evale git submodule update
 
 # Sanity check => do we have anything here
 if [[ $(ls | wc -w) = "0" ]]; then
