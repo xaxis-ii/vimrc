@@ -1,2 +1,5 @@
 .netrwhist
 view/**
+bundle/**
+spell/**
+ftplugin/**

@@ -12,14 +12,14 @@ function perror {
 }
 
 # Associative array declaration - Bash 4 required
-declare -A VIMRC \
-    || perror 'Bash 4+ required for `declare -A`. Please update or modify ' \
-              '.vim/install to bypass requirement.'
+#declare -A VIMRC \
+#    || perror 'Bash 4+ required for `declare -A`. Please update or modify ' \
+#              '.vim/install to bypass requirement.'
 
 # Dotfile locations
-VIMRC=( 
-    ["vimrc"]="${HOME}/.vimrc"
-)
+#VIMRC=( 
+#    ["vimrc"]="${HOME}/.vimrc"
+#)
 
 # Helper function - evaluate then print
 function evale {
@@ -33,12 +33,12 @@ HERE="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 echo "= Found dotfiles and git repo here: ${HERE}"
 echo
 
-echo '= Installing links for dotfiles...'
-for dotfile in "${!VIMRC[@]}"; do
-    evale ln -s "${HERE}/${dotfile}" "${VIMRC[${dotfile}]}" 
-done
-echo '= Finished installing dotfile links'
-echo
+#echo '= Installing links for dotfiles...'
+#for dotfile in "${!VIMRC[@]}"; do
+#    evale ln -s "${HERE}/${dotfile}" "${VIMRC[${dotfile}]}" 
+#done
+#echo '= Finished installing dotfile links'
+#echo
 
 echo '= Initialising Vundle'
 (git --version > /dev/null) \

@@ -53,6 +53,9 @@ Plugin 'taglist.vim'
 " Plugin 'Supertab' -> Tab completion
 Plugin 'ervandew/supertab'
 
+" Plugin 'vimtex' -> LaTeX vim integration
+Plugin 'lervag/vimtex'
+
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 
@@ -235,6 +238,50 @@ augroup AutoSaveFolds
   autocmd BufWinEnter * silent loadview
 augroup END
 
+
+"------------------------------------------------------------
+" Toggle Line Wrapping {{{1
+"
+"noremap <silent> <Leader>w :call ToggleWrap()<CR>
+"function ToggleWrap()
+"  if &wrap
+"    echo "Wrap OFF"
+"    setlocal nowrap
+"    set virtualedit=all
+"    silent! nunmap <buffer> j
+"    silent! nunmap <buffer> k
+"    silent! nunmap <buffer> <Home>
+"    silent! nunmap <buffer> <End>
+"    silent! iunmap <buffer> j
+"    silent! iunmap <buffer> k
+"    silent! iunmap <buffer> <Home>
+"    silent! iunmap <buffer> <End>
+"  else
+"    echo "Wrap ON"
+"    setlocal wrap linebreak nolist
+"    set virtualedit=
+"    setlocal display+=lastline
+"    noremap  <buffer> <silent> k      gk
+"    noremap  <buffer> <silent> j      gj
+"    noremap  <buffer> <silent> <Home> g<Home>
+"    noremap  <buffer> <silent> <End>  g<End>
+"    inoremap <buffer> <silent> k      <C-o>gk
+"    inoremap <buffer> <silent> j      <C-o>gj
+"    inoremap <buffer> <silent> <Home> <C-o>g<Home>
+"    inoremap <buffer> <silent> <End>  <C-o>g<End>
+"  endif
+"endfunction
+
+
+"------------------------------------------------------------
+" VimTex setup
+"
+let g:vimtex_view_method = 'skim'
+
+let g:tex_flavor = "latex"
+
+let g:vimtex_fold_enabled = 1
+
 "------------------------------------------------------------
 " Mappings {{{1
 "
@@ -250,7 +297,7 @@ nnoremap <C-L> :nohl<CR><C-L>
 
 " == CurtineIncSw mapping (to <F5>)
 
-map <F5> :call CurtineIncSw()<CR> 
+map <F9> :call CurtineIncSw()<CR> 
 
 " == <ESC> replacement(s)
 
