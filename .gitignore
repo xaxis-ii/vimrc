@@ -1,0 +1,8 @@
+# Vim runtime and cacheing files & directories
+view
+
+# Mac OS X likes to introduce garbage sometimes
+.DS_Store
+.Spotlight-V100
+.Trashes
+.spotlight-v100
