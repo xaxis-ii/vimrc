@@ -1,5 +1,6 @@
 # Vim runtime and cacheing files & directories
 view
+spell
 
 # Mac OS X likes to introduce garbage sometimes
 .DS_Store

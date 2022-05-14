@@ -136,6 +136,7 @@ set shiftwidth=4
 set softtabstop=4
 set expandtab
 
+
 " Indentation settings for using hard tabs for indent. Display tabs as
 " four characters wide.
 "set shiftwidth=4
@@ -160,23 +161,28 @@ let c_no_comment_fold = 1
 augroup AutoSaveFolds
   function! LoadView() abort
     try
-      loadview
+      silent loadview | filetype detect
     catch /E32/
+      return
+    catch /E788/
       return
     endtry
   endfunction
   function! MkView() abort
     try
-      mkview
+      mkview | filetype detect
     catch /E32/
       return
     endtry
   endfunction
 
-  "autocmd!
-  "autocmd BufWinLeave * call MkView()
-  "autocmd BufWinEnter * call LoadView()
+  autocmd!
+  autocmd BufWinLeave ?* call MkView()
+  autocmd BufWinEnter ?* call LoadView()
 augroup END
+
+" Set HTML, CSS, JS, TS to tabstop 2
+autocmd FileType html,css,javascript,typescript setlocal shiftwidth=2 softtabstop=2 expandtab
 
 "------------------------------------------------------------
 " Mappings {{{1
@@ -190,10 +196,6 @@ map Y y$
 " Map <C-L> (redraw screen) to also turn off search highlighting until the
 " next search
 nnoremap <C-L> :nohl<CR><C-L>
-
-" == CurtineIncSw mapping (to <F5>)
-
-map <F5> :call CurtineIncSw()<CR>
 
 " == <ESC> replacement(s)
 
